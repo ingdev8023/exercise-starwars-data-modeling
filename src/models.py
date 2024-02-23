@@ -30,7 +30,7 @@ class Favorite(Base):
     id = Column(Integer, primary_key=True)
     favorites = Column(Integer)
     user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    user = relationship(User, back_populates='favorites')
 
     def serialize(self):
         return {
@@ -46,7 +46,7 @@ class Comment(Base):
     id = Column(Integer, primary_key=True)
     comment_text = Column(String(250))
     user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    user = relationship(User, back_populates='comment')
     
     def to_dict(self):
         return {
@@ -62,7 +62,7 @@ class Post(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     post_text = Column(String(250))
-    person = relationship(User)
+    person = relationship(User, back_populates='post')
 
     def to_dict(self):
         return {
@@ -78,7 +78,7 @@ class Character(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     post_id = Column(Integer, ForeignKey('post.id'))
-    post = relationship(Post)
+    post = relationship(Post, back_populates='character')
 
     def to_dict(self):
         return {
@@ -94,7 +94,7 @@ class Planet(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     post_id = Column(Integer, ForeignKey('post.id'))
-    post = relationship(Post)
+    post = relationship(Post, back_populates='planet')
 
     def to_dict(self):
         return {
